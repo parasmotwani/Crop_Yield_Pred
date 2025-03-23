@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Crop Yield Prediction</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='styles.css') }}"
+    />
+  </head>
+
+  <body>
+    <div class="container">
+      <h1 class="text-center text-success">Crop Yield Prediction</h1>
+
+      <form action="/predict" method="post">
+        <div class="mb-3">
+          <label for="Year" class="form-label">Year</label>
+          <select name="Year" class="form-control">
+            {% for y in range(1900, 2050) %}
+            <option value="{{ y }}">{{ y }}</option>
+            {% endfor %}
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label for="average_rain_fall_mm_per_year" class="form-label"
+            >Average Rainfall (in mm/year)</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            name="average_rain_fall_mm_per_year"
+            step="any"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label for="pesticides_tonnes" class="form-label"
+            >Pesticides (tonnes)</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            name="pesticides_tonnes"
+            step="any"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label for="avg_temp" class="form-label"
+            >Average Temperature (°C)</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            name="avg_temp"
+            step="any"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label for="Area" class="form-label">Country/Region</label>
+          <select name="Area" id="Country" class="form-control select2">
+            <option value="" selected disabled>Select Country</option>
+            {% for country in countries %}
+            <option value="{{ country }}">{{ country }}</option>
+            {% endfor %}
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label for="Item" class="form-label">Crop Type</label>
+          <select name="Item" id="CropType" class="form-control select2">
+            <option value="" selected disabled>Select Crop Type</option>
+            {% for crop in crops %}
+            <option value="{{ crop }}">{{ crop }}</option>
+            {% endfor %}
+          </select>
+        </div>
+
+        <button type="submit" class="btn btn-danger mt-3">Predict</button>
+      </form>
+
+      {% if prediction %}
+      <h2 class="text-center mt-4">
+        Predicted Yield: <br /><span class="text-warning"
+          >{{ prediction }}</span
+        >
+      </h2>
+      {% endif %}
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+    <script>
+      $(document).ready(function () {
+        $(".select2").select2({
+          width: "100%",
+        });
+      });
+    </script>
+  </body>
+</html>

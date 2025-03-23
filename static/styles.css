@@ -1,0 +1,56 @@
+body {
+  background: url("https://source.unsplash.com/1600x900/?farm,agriculture")
+    no-repeat center center/cover;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.container {
+  background: rgba(0, 0, 0, 0.7);
+  color: white;
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  max-width: 600px;
+}
+
+h1 {
+  font-weight: bold;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+h1.text-center {
+  color: #50c878 !important;
+}
+
+.form-group label {
+  font-weight: bold;
+}
+
+.btn-danger {
+  width: 100%;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.form-control {
+  height: 40px;
+}
+
+.select2-container .select2-selection--single {
+  height: 40px !important;
+  line-height: 40px !important;
+  padding-left: 12px !important;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+}
+
+.select2-container--default
+  .select2-selection--single
+  .select2-selection__rendered {
+  line-height: 40px !important;
+  font-size: 16px;
+}
