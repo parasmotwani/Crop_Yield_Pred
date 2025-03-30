@@ -3,17 +3,33 @@ import numpy as np
 import pandas as pd
 import pickle
 import os
+import warnings
+warnings.filterwarnings("ignore")
 
 # Initialize Flask app
 app = Flask(__name__)
 
 # Load models
-model_path = "/Users/parasmotwani/Desktop/PROJECTS/cropYield/models"
-best_xgboost = pickle.load(open(os.path.join(model_path, "best_xgboost.pkl"), "rb"))
-preprocessor = pickle.load(open(os.path.join(model_path, "preprocessor.pkl"), "rb"))
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))  # Get current directory
+MODEL_DIR = os.path.join(BASE_DIR, "models")  # Define models directory
+
+model_path = os.path.join(MODEL_DIR, "best_xgboost.pkl")
+preprocessor_path = os.path.join(MODEL_DIR, "preprocessor.pkl")
+
+try:
+    with open(model_path, "rb") as model_file:
+        best_xgboost = pickle.load(model_file)
+
+    with open(preprocessor_path, "rb") as preprocessor_file:
+        preprocessor = pickle.load(preprocessor_file)
+except Exception as e:
+    print(f"Error loading models: {e}")
+    best_xgboost = None
+    preprocessor = None
 
 # Load dataset for dropdown options
-df = pd.read_csv("/Users/parasmotwani/Desktop/PROJECTS/cropYield/yield_df.csv")
+DATASET_PATH = os.path.join(BASE_DIR, "yield_df.csv")
+df = pd.read_csv(DATASET_PATH)
 
 # Extract unique values for dropdowns
 countries = sorted(df["Area"].dropna().unique().tolist())
@@ -48,4 +64,4 @@ def predict():
             return render_template("index.html", prediction=f"Error: {str(e)}", countries=countries, crops=crops)
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(host="0.0.0.0", port=5050, debug=True)
