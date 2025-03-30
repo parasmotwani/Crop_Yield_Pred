@@ -5,3 +5,5 @@ pandas
 flask
 seaborn
 matplotlib
+xgboost
+gunicorn
